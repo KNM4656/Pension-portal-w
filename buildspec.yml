@@ -1,14 +1,20 @@
 version: 0.2
-
 phases:
+  install:
+    runtime-versions:
+      java: corretto8
+  pre_build:
+    commands:
+    - echo In the pre_build phase...
   build:
     commands:
-      - echo Entered the build phase...
-      - mvn clean package
+    - echo Build started on `date`
   post_build:
     commands:
-      - echo Build completed successfully
+    - echo Build completed on `date`
+    - mvn package
+    - mv target/pension-portal.war pension-portal.war
 artifacts:
   files:
-    - target/pension-portal.war
-  discard-paths: yes
+  - pension-portal.war
+  - .ebextensions/**/*
